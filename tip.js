@@ -1,16 +1,23 @@
-console.log("test phrase")
+console.log("test phrase");
 
-
-function setBill() {
-  let bill = document.getElementById("billAmount").value;
-  let tip = document.getElementById("tipPercent").value;
-  let amount = 0;
-  amount = bill * (tip / 100);
-  console.log(amount);
-  clean = "Tip amount : $ " + (Math.round(amount*100)/100).toFixed(2);
-  let answer = document.getElementById("tipAmount");
-  answer.textContent = clean;
+function calcTip(bill) {
+  return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.20;
 }
-document.getElementById("billSet").addEventListener("click", function (event) {
+
+document.getElementById("calculateTip").addEventListener("click", function(event) {
   event.preventDefault();
+  let bill = parseFloat(document.getElementById("billAmount").value);
+  let tip = calcTip(bill);
+  let total = bill + tip;
+  console.log(`The bill was $${bill}, the tip was $${tip.toFixed(2)}, and the total value $${total.toFixed(2)}`);
+  document.getElementById("tipAmount").textContent = `Tip amount: $${tip.toFixed(2)}`;
+  document.getElementById("totalAmount").textContent = `Total amount: $${total.toFixed(2)}`;
 });
+
+const bills = [275, 40, 430];
+const tips = bills.map(calcTip);
+const totals = bills.map((bill, index) => bill + tips[index]);
+
+console.log('Bills:', bills);
+console.log('Tips:', tips);
+console.log('Totals:', totals);
